@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- bili-config: 一个"压缩抽屉"——外框 + 内部三条被折叠的行 -->
+  <rect x="8" y="10" width="48" height="44" rx="6" fill="none" stroke="#4a9eff" stroke-width="3"/>
+  <!-- 三条内容行，逐渐压缩 -->
+  <rect x="16" y="18" width="32" height="6" rx="3" fill="#4a9eff" opacity="0.9"/>
+  <rect x="16" y="30" width="20" height="6" rx="3" fill="#4a9eff" opacity="0.6"/>
+  <rect x="16" y="42" width="10" height="6" rx="3" fill="#4a9eff" opacity="0.35"/>
+</svg>

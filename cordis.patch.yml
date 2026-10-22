@@ -1,0 +1,5 @@
+# dsh-bili-config bundle patch —— 声明本组合包引入哪些行。
+- insert:
+    - id: bili-config
+      name: 'dsh-bili-config'
+      config: {}

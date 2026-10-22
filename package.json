@@ -1,0 +1,61 @@
+{
+  "name": "dsh-bili-config",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Graphical config panel for the billion-context (ACP) compression engine inside DeepSeek Harness: tune fold thresholds from the plugin page, watch live usage / pending-compress / cache-hit / drift metrics, and apply preset profiles — no more hand-editing a 328KB reference doc.",
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "cordis",
+    "cordis-plugin",
+    "billion-context",
+    "acp",
+    "compression",
+    "context",
+    "token",
+    "config"
+  ],
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./package.json": "./package.json",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "index.js",
+    "client.js",
+    "lib",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg",
+    "README.md",
+    "README.en.md",
+    "LICENSE",
+    "tests"
+  ],
+  "scripts": {
+    "check": "node --check index.js && node --check client.js && node --check lib/config.mjs && node --check lib/logtail.mjs",
+    "test": "node --test tests/config.test.mjs tests/logtail.test.mjs"
+  },
+  "engines": {
+    "dsh": "^0.2.1-rc.2"
+  },
+  "dsh": {
+    "id": "dsh-bili-config",
+    "name": "bili 压缩配置",
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true
+    }
+  }
+}
