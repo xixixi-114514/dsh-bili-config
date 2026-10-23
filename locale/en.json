@@ -27,5 +27,7 @@
   "configPath": "Config file",
   "logPath": "Log file",
   "advanced": "Per-key (whitelist)",
-  "refresh": "Refresh"
+  "refresh": "Refresh",
+  "engineMissingTitle": "billion-context engine not detected",
+  "engineMissingBody": "This plugin is its remote control — install the engine first, otherwise the metrics below stay empty and presets have no effect:"
 }

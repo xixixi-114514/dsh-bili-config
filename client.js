@@ -58,6 +58,8 @@ window.__ModuleLoader__.load({
       },
       advanced: '逐键调整（白名单）',
       refresh: '刷新指标',
+      engineMissingTitle: '未检测到 billion-context 压缩引擎',
+      engineMissingBody: '本插件是它的遥控器——请先安装引擎，否则下方指标不会显示、档位也不会有实际效果：',
     };
 
     const en = {
@@ -104,6 +106,8 @@ window.__ModuleLoader__.load({
       },
       advanced: 'Per-key (whitelist)',
       refresh: 'Refresh',
+      engineMissingTitle: 'billion-context engine not detected',
+      engineMissingBody: 'This plugin is its remote control — install the engine first, otherwise the metrics below stay empty and presets have no effect:',
     };
 
     const pct = (n) => (n === null || n === undefined ? '—' : `${n}%`);
@@ -165,18 +169,33 @@ window.__ModuleLoader__.load({
           return h('div', null, msg || h('p', null, t('loading')));
         }
 
-        const preset = state.preset || t('noPreset');
-        const keyRows = ['compress.nudgeGrowthTokens', 'compress.maxContextLimit', 'compress.reconcile', 'compress.minPressureBenefitTokens'];
-        const editable = ['compress.nudgeGrowthTokens', 'compress.maxContextLimit'];
+        const engineMissing = !state.engineVersion;
 
         return h('div', { style: { display: 'flex', flexDirection: 'column', gap: '12px' } },
+          // —— 引擎缺失空态 ——
+          engineMissing
+            ? h('div', {
+                style: {
+                  padding: '10px 12px',
+                  border: '1px solid var(--dsw-alias-border)',
+                  borderRadius: '6px',
+                  background: 'var(--dsw-alias-surface)',
+                },
+              },
+                h('p', { style: { margin: '0 0 4px', fontWeight: 600 } }, t('engineMissingTitle')),
+                h('p', { style: { margin: '0 0 4px', color: 'var(--dsw-alias-text-secondary)' } }, t('engineMissingBody')),
+                h('code', { style: { fontSize: '0.85em' } },
+                  h('pre', { style: { margin: 0, padding: '6px 8px', borderRadius: '4px', background: 'var(--dsw-alias-surface)', overflowX: 'auto' } },
+                    'dsh plugin --profile web add billion-context')),
+              )
+            : null,
           h('p', { style: { color: 'var(--dsw-alias-text-secondary)' } }, t('lead')),
           h('p', { style: { fontSize: '0.85em', color: 'var(--dsw-alias-text-secondary)' } },
             `${t('engineVersion')}: ${state.engineVersion ?? '—'} · ${t('configPath')}: ${state.configPath}`),
 
           // —— 档位 ——
           h('div', null,
-            h('h3', { style: { margin: '0 0 6px' } }, `${t('presets')} · ${t('currentPreset')}: ${preset}`),
+            h('h3', { style: { margin: '0 0 6px' } }, `${t('presets')} · ${t('currentPreset')}: ${state.preset || t('noPreset')}`),
             h('div', { style: { display: 'flex', gap: '8px', flexWrap: 'wrap' } },
               ['conservative', 'balanced', 'aggressive'].map((id) =>
                 h('button', {
@@ -213,7 +232,7 @@ window.__ModuleLoader__.load({
           // —— 逐键 ——
           h('div', null,
             h('h3', { style: { margin: '0 0 6px' } }, t('advanced')),
-            keyRows.filter((k) => editable.includes(k)).map((k) => {
+            ['compress.nudgeGrowthTokens', 'compress.maxContextLimit'].map((k) => {
               const v = state.values?.[k];
               const isPct = typeof v === 'string' && v.includes('%');
               return h('div', { key: k, style: { display: 'flex', alignItems: 'center', gap: '8px', padding: '4px 0' } },

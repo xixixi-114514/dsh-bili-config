@@ -27,5 +27,7 @@
   "configPath": "配置文件",
   "logPath": "日志文件",
   "advanced": "逐键调整（白名单）",
-  "refresh": "刷新指标"
+  "refresh": "刷新指标",
+  "engineMissingTitle": "未检测到 billion-context 压缩引擎",
+  "engineMissingBody": "本插件是它的遥控器——请先安装引擎，否则下方指标不会显示、档位也不会有实际效果："
 }
