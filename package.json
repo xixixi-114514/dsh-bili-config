@@ -17,6 +17,15 @@
     "config"
   ],
   "license": "MIT",
+  "author": "your-name",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/your-name/dsh-bili-config.git"
+  },
+  "homepage": "https://github.com/your-name/dsh-bili-config#readme",
+  "bugs": {
+    "url": "https://github.com/your-name/dsh-bili-config/issues"
+  },
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
