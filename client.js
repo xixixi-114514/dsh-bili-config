@@ -189,7 +189,7 @@ window.__ModuleLoader__.load({
                     border: '1px solid var(--dsw-alias-border)',
                     borderRadius: '6px',
                     background: state.preset === id ? 'var(--dsw-alias-primary)' : 'var(--dsw-alias-surface)',
-                    color: state.preset === id ? 'var(--dsw-alias-on-primary, #fff)' : 'var(--dsw-alias-text)',
+                    color: state.preset === id ? 'var(--dsw-alias-on-primary)' : 'var(--dsw-alias-text)',
                     cursor: 'pointer',
                   },
                 }, t(id === 'conservative' ? 'presetConservative' : id === 'balanced' ? 'presetBalanced' : 'presetAggressive')),
