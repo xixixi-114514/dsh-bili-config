@@ -10,7 +10,7 @@
  * UI 在 client.js（插件页 tab）。
  */
 
-import { resolveConfigPath, currentValues, applyPatch, matchingPreset, engineVersion, PRESETS, WHITELIST } from './lib/config.mjs';
+import { resolveConfigPath, currentValues, applyPatch, applyPreset, matchingPreset, engineVersion, PRESETS, WHITELIST } from './lib/config.mjs';
 import { resolveLogPath, collectMetrics } from './lib/logtail.mjs';
 
 export const name = 'bili-config';
@@ -60,7 +60,7 @@ export function apply(ctx) {
       if (req.method === 'POST' && url.pathname === `${ROUTE}/apply`) {
         const body = await readBody(req);
         if (body.preset && PRESETS[body.preset]) {
-          const result = applyPatch(configPath, PRESETS[body.preset].values);
+          const result = applyPreset(configPath, body.preset);
           if (!result.ok) return json(res, 400, result);
           return json(res, 200, { ...result, preset: body.preset });
         }
