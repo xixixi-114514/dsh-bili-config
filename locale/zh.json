@@ -29,5 +29,13 @@
   "advanced": "逐键调整（白名单）",
   "refresh": "刷新指标",
   "engineMissingTitle": "未检测到 billion-context 压缩引擎",
-  "engineMissingBody": "本插件是它的遥控器——请先安装引擎，否则下方指标不会显示、档位也不会有实际效果："
+  "engineMissingBody": "本插件是它的遥控器——请先安装引擎，否则下方指标不会显示、档位也不会有实际效果：",
+  "compatTitle": "插件兼容性提示",
+  "compatChecked": "已检查 {n} 个已装插件",
+  "compatItem": "⚠️",
+  "conflictsWith": "与",
+  "listJoin": "、",
+  "level.conflict": "冲突",
+  "level.incompatible": "不兼容",
+  "level.overlap": "功能重叠"
 }

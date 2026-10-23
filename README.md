@@ -46,6 +46,23 @@ DSH Desktop 桌面端请在应用内 **设置 → 插件** 里安装（桌面端
 - **@indexyz/dsh-autocompact**：管的是 DSH **原生 compaction**（`/compact` 链路、`dsh-compaction` 服务）的触发阈值；本插件管的是 **billion-context 的 ACP fold**（独立代理、`~/.config/billion-context/`）。两者是"客厅空调遥控器"和"卧室空调遥控器"，互不干涉，可以同装。唯一的交集是 UI 上提醒：两条管线都调太狠会过度压缩丢信息。
 - **dsh-context-governor**：只读观测通用上下文/费用；本插件专写 billion-context 配置，两者互补。
 
+## 内置插件冲突检测
+
+插件页会**自动检查 profile 里已安装的插件**，如果发现已知会与本插件或 billion-context 打架的，会在面板顶部逐条提示，格式如：
+
+```
+插件兼容性提示（已检查 18 个已装插件）
+⚠️ mosaic-memory-compress 与 billion-context 冲突（冲突）：就地对话压缩与 ACP fold 同域竞争……
+⚠️ dsh-sieve 与 DSH 0.2.1-rc.2 宿主（不兼容）：engines 锁 0.2.1-alpha.1 线，安装会加载失败。
+```
+
+检测分级：
+- **冲突**：同装互相破坏（如 mosaic-memory-compress 与 billion-context 双压缩引擎互相覆盖状态）
+- **不兼容**：版本/引擎面不匹配，装不上或加载失败（如 dsh-sieve）
+- **功能重叠**：不报错但重复/空转（如 dsh-cost-meter 与 whale-widget 同域）
+
+知识库位于 `lib/compatibility.mjs`（`COMPAT` 表），只收录有实际依据的条目；**未收录的插件一律不猜"没冲突"**。模型侧也可以用 `bili_config` 工具 `action=compat` 查询。
+
 ## 安全设计
 
 1. **键级合并，绝不整文件覆盖** —— billion-context 两天升了三版（0.1.202→0.1.204），键面在变；用户配置里我们不认识的键一律原样保留。

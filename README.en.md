@@ -46,6 +46,23 @@ Requires DSH `0.2.1-rc.2` (declared in `engines.dsh`). Works with any recent bil
 - **@indexyz/dsh-autocompact**: manages DSH's *native* compaction (`/compact`, `dsh-compaction` service). This plugin manages *billion-context's* ACP fold — a separate process with a separate config. Like remotes for two different air conditioners in one house: no overlap, safe to install both. The only shared concern is a UI hint: cranking both pipelines too hard loses information.
 - **dsh-context-governor**: read-only observation of general context/cost stats; this plugin writes billion-context config specifically. Complementary.
 
+## Built-in plugin conflict detection
+
+The plugin page **automatically checks your profile's installed plugins** against a known-conflict knowledge base. When a conflict is found, the panel shows it at the top, e.g.:
+
+```
+Plugin compatibility notes (checked 18 installed plugins)
+⚠️ mosaic-memory-compress conflicts with billion-context (CONFLICT): in-place dialogue compression competes with ACP fold…
+⚠️ dsh-sieve conflicts with DSH 0.2.1-rc.2 host (INCOMPATIBLE): engines lock the 0.2.1-alpha.1 line; install fails.
+```
+
+Levels:
+- **CONFLICT**: co-installing breaks each other (e.g. mosaic-memory-compress vs billion-context — two compression engines overwrite each other's fold state)
+- **INCOMPATIBLE**: version/engine mismatch, fails to load (e.g. dsh-sieve)
+- **overlap**: no crash, but duplicate or idle functionality (e.g. dsh-cost-meter vs whale-widget)
+
+The knowledge base lives in `lib/compatibility.mjs` (`COMPAT`); only evidence-backed entries are included — **unlisted plugins are never guessed as "compatible"**. The model side can query via the `bili_config` tool with `action=compat`.
+
 ## Safety design
 
 1. **Key-level merge, never whole-file rewrite** — billion-context shipped three releases in two days (0.1.202→0.1.204); unknown keys in user config pass through untouched.

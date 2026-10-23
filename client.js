@@ -60,6 +60,14 @@ window.__ModuleLoader__.load({
       refresh: '刷新指标',
       engineMissingTitle: '未检测到 billion-context 压缩引擎',
       engineMissingBody: '本插件是它的遥控器——请先安装引擎，否则下方指标不会显示、档位也不会有实际效果：',
+      compatTitle: '插件兼容性提示',
+      compatChecked: '已检查 {n} 个已装插件',
+      compatItem: '⚠️',
+      conflictsWith: '与',
+      listJoin: '、',
+      'level.conflict': '冲突',
+      'level.incompatible': '不兼容',
+      'level.overlap': '功能重叠',
     };
 
     const en = {
@@ -108,6 +116,14 @@ window.__ModuleLoader__.load({
       refresh: 'Refresh',
       engineMissingTitle: 'billion-context engine not detected',
       engineMissingBody: 'This plugin is its remote control — install the engine first, otherwise the metrics below stay empty and presets have no effect:',
+      compatTitle: 'Plugin compatibility notes',
+      compatChecked: 'checked {n} installed plugins',
+      compatItem: '⚠️',
+      conflictsWith: 'conflicts with',
+      listJoin: ', ',
+      'level.conflict': 'CONFLICT',
+      'level.incompatible': 'INCOMPATIBLE',
+      'level.overlap': 'overlap',
     };
 
     const pct = (n) => (n === null || n === undefined ? '—' : `${n}%`);
@@ -170,8 +186,34 @@ window.__ModuleLoader__.load({
         }
 
         const engineMissing = !state.engineVersion;
+        const compat = state.compat;
+        const compatFindings = (compat && compat.findings) || [];
 
         return h('div', { style: { display: 'flex', flexDirection: 'column', gap: '12px' } },
+          // —— 插件冲突提示（有发现才显示） ——
+          compatFindings.length
+            ? h('div', {
+                style: {
+                  padding: '10px 12px',
+                  border: '1px solid var(--dsw-alias-border)',
+                  borderRadius: '6px',
+                  background: 'var(--dsw-alias-surface)',
+                },
+              },
+                h('p', { style: { margin: '0 0 6px', fontWeight: 600 } },
+                  t('compatTitle') + (compat.checkedCount ? `（${t('compatChecked').replace('{n}', compat.checkedCount)}）` : '')),
+                ...compatFindings.map((f) => {
+                  const who = (f.with && f.with.length) ? f.with.join(t('listJoin')) : '';
+                  const levelLabel = t('level.' + f.level) || f.level;
+                  return h('p', {
+                    key: f.name,
+                    style: { margin: '0 0 4px', fontSize: '0.9em', color: 'var(--dsw-alias-text-secondary)' },
+                  },
+                    `${t('compatItem')} ${f.name} ${t('conflictsWith')} ${who}（${levelLabel}）：${f.reason}`,
+                  );
+                }),
+              )
+            : null,
           // —— 引擎缺失空态 ——
           engineMissing
             ? h('div', {

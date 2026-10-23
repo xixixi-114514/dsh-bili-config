@@ -29,5 +29,13 @@
   "advanced": "Per-key (whitelist)",
   "refresh": "Refresh",
   "engineMissingTitle": "billion-context engine not detected",
-  "engineMissingBody": "This plugin is its remote control — install the engine first, otherwise the metrics below stay empty and presets have no effect:"
+  "engineMissingBody": "This plugin is its remote control — install the engine first, otherwise the metrics below stay empty and presets have no effect:",
+  "compatTitle": "Plugin compatibility notes",
+  "compatChecked": "checked {n} installed plugins",
+  "compatItem": "⚠️",
+  "conflictsWith": "conflicts with",
+  "listJoin": ", ",
+  "level.conflict": "CONFLICT",
+  "level.incompatible": "INCOMPATIBLE",
+  "level.overlap": "overlap"
 }

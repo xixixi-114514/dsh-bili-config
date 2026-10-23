@@ -42,8 +42,8 @@
     "tests"
   ],
   "scripts": {
-    "check": "node --check index.js && node --check client.js && node --check lib/config.mjs && node --check lib/logtail.mjs",
-    "test": "node --test tests/config.test.mjs tests/logtail.test.mjs tests/integration.test.mjs tests/contract.test.mjs tests/conflict.test.mjs tests/preset-residue.test.mjs"
+    "check": "node --check index.js && node --check client.js && node --check lib/config.mjs && node --check lib/logtail.mjs && node --check lib/compatibility.mjs",
+    "test": "node --test tests/config.test.mjs tests/logtail.test.mjs tests/integration.test.mjs tests/contract.test.mjs tests/conflict.test.mjs tests/preset-residue.test.mjs tests/compatibility.test.mjs"
   },
   "engines": {
     "dsh": "^0.2.1-rc.2"
